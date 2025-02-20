@@ -1,13 +1,12 @@
 import { connect } from '@/dbConfig/dbConfig';
 import User from '@/models/userModel';
 import { NextResponse, NextRequest } from 'next/server';
-import { sendEmail } from '@/helpers/mailer';
 import bcryptjs from 'bcryptjs'
 import jwt from 'jsonwebtoken';
-import dotenv from 'dotenv'
+
 
 connect()
-dotenv.config();
+
 
 export async function POST(request: NextRequest) {
     try {
