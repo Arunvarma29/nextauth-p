@@ -9,11 +9,12 @@ export const sendEmail = async ({ email, emailType, userID }: any) => {
     const hashedToken = await bcryptjs.hash(userID.toString(), 10)
 
     if (emailType === "VERIFY") {
-      await User.findByIdAndUpdate(userID,
-        {
+      await User.findByIdAndUpdate(userID,{
+       $set: {
           verifyToken: hashedToken,
           verifyTokenExpiry: Date.now() + 3600000
         }
+      }
       )
     } else if (emailType === "RESET") {
       await User.findByIdAndUpdate(userID,
@@ -44,7 +45,7 @@ export const sendEmail = async ({ email, emailType, userID }: any) => {
                 ${emailType === "VERIFY" ? "verify your email" :
           "reset your password"}
                   or copy and paste the link below in your browser.
-                  <br>${process.env.DOMAIN}/verifyemail?tooken=${hashedToken}
+                  <br>${process.env.DOMAIN}/verifyemail?token=${hashedToken}
                   </p>`,
     };
 
